@@ -9,22 +9,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 let itemsToBuy = [];
 let itemsToBuy2 = [];
+let user = "user1";
 
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  user = "user1";
+  res.render("index.ejs", { toBuy: itemsToBuy });
 });
 app.post("/submit", (req, res) => {
   const newItem = req.body["product"];
-  itemsToBuy.push(newItem);
-  res.render("index.ejs", { toBuy: itemsToBuy });
+
+  if (user === "user1") {
+    itemsToBuy.unshift(newItem);
+    user = "user1";
+    res.redirect("/");
+  } else if (user === "user2") {
+    user = "user2";
+    itemsToBuy2.unshift(newItem);
+    res.redirect("/user2");
+  }
 });
 
 app.get("/user2", (req, res) => {
-  res.render("index.ejs");
-});
-app.post("/submit", (req, res) => {
-  const newItem = req.body["product"];
-  itemsToBuy2.push(newItem);
+  user = "user2";
   res.render("index.ejs", { toBuy: itemsToBuy2 });
 });
 
