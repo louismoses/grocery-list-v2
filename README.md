@@ -10,3 +10,11 @@ A web application using NODE, EXPRESS and EJS. The application will allow users 
 <li>Node.js</li>
 <li>TailwindCSS</li>
 </ul>
+
+<h2>Features</h2>
+<ul>
+    <li>Adding of product</li>
+    <li>Display of added product</li>
+    <li>Line-through on product that has ticked checkbox</li>
+    <li>Alternative List for other User</li>
+</ul>
