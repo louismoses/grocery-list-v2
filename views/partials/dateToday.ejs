@@ -1,0 +1,12 @@
+<%
+const currentDate = new Date();
+
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+const currentMonth = month[currentDate.getMonth()]
+
+const currentDay = currentDate.getDate(); 
+const currentYear = currentDate.getFullYear(); 
+
+%>
+<%= currentMonth %> <%= currentDay %>, <%= currentYear %>

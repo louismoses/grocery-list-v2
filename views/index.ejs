@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grocery List</title>
-</head>
-<body>
-    <h1>Grocery</h1>
-</body>
-</html>
+<%- include('partials/header.ejs') %>
+
+<main class="container m-auto font-sans ">
+    <section class="flex gap-6 p-2.5">
+        <a href="/user1" method="post">User 1</a>
+        <a href="/user2" method="post">User 2</a>
+    </section>
+
+    <section class="text-center">
+        <h1 class="text-4xl ">Grocery List</h1>
+        <p><%- include('partials/dateToday.ejs') %></p>
+    </section>
+    
+
+
+    
+</main>
+    
+
+<%- include('partials/footer.ejs') %>
