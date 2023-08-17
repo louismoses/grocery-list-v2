@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') %>
 
 
-<main class="container m-auto font-sans text-center z-10">
+<main class="container m-auto font-sans text-center z-10 text-white	">
     <section class="flex gap-6 p-2.5">
         <a href="/user1" method="post">User 1</a>
         <a href="/user2" method="post">User 2</a>
@@ -11,7 +11,7 @@
         <h1 class="text-4xl ">Grocery List</h1>
         <p><%- include('partials/dateToday.ejs') %></p>
     </section>
-    <section class="container mx-auto ">
+    <section class="container mx-auto  text-black">
         <div class="col  max-w-sm	p-6 mx-auto m-10">
             <form action="/submit" method="post" class="	">
             <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
@@ -19,12 +19,14 @@
              </form>
         </div>
     </section>
-    <section class="container mx mx-auto">
+    <section class="container mx mx-auto ">
+        <% if(locals.toBuy){ %>
         <ul>
-            <% locals.toBuy.forEach(item =>{ %>
-                <li><%= item %></li>
+            <% toBuy.forEach(item =>{ %>
+                <li><input type="checkbox" name="" id=""> <%= item %></li>
            <% }) %>
         </ul>
+        <% } %>
     </section>
     
 
