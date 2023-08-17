@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs') %>
 
-<main class="container m-auto font-sans ">
+<main class="container m-auto font-sans text-center">
     <section class="flex gap-6 p-2.5">
         <a href="/user1" method="post">User 1</a>
         <a href="/user2" method="post">User 2</a>
@@ -9,6 +9,17 @@
     <section class="text-center">
         <h1 class="text-4xl ">Grocery List</h1>
         <p><%- include('partials/dateToday.ejs') %></p>
+    </section>
+    <section class="container mx-auto ">
+        <div class="col  max-w-sm	p-6 mx-auto m-10">
+            <form action="/submit" method="post" class="	">
+            <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
+            <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3">
+             </form>
+        </div>
+    </section>
+    <section class="container mx mx-auto">
+        <%= locals.toBuy %>
     </section>
     
 
