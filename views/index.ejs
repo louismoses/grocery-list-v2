@@ -1,6 +1,7 @@
 <%- include('partials/header.ejs') %>
 
-<main class="container m-auto font-sans text-center">
+
+<main class="container m-auto font-sans text-center z-10">
     <section class="flex gap-6 p-2.5">
         <a href="/user1" method="post">User 1</a>
         <a href="/user2" method="post">User 2</a>
@@ -19,13 +20,17 @@
         </div>
     </section>
     <section class="container mx mx-auto">
-        <%= locals.toBuy %>
+        <ul>
+            <% locals.toBuy.forEach(item =>{ %>
+                <li><%= item %></li>
+           <% }) %>
+        </ul>
     </section>
     
 
 
-    
 </main>
     
 
 <%- include('partials/footer.ejs') %>
+<%- include('partials/animatedBackground.ejs') %>

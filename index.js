@@ -7,12 +7,16 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let itemsToBuy = [];
+
 app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 app.post("/submit", (req, res) => {
   const newItem = req.body["product"];
-  res.render("index.ejs", { toBuy: newItem });
+  itemsToBuy.push(newItem);
+
+  res.render("index.ejs", { toBuy: itemsToBuy });
 });
 
 app.listen(port, () => {
