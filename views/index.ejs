@@ -3,7 +3,7 @@
 
 <main class="container m-auto font-sans text-center z-10 text-white	">
     <section class="flex gap-6 p-2.5">
-        <a href="/user1" method="post">User 1</a>
+        <a href="/" method="post">User 1</a>
         <a href="/user2" method="post">User 2</a>
     </section>
 
@@ -13,7 +13,7 @@
     </section>
     <section class="container mx-auto  text-black">
         <div class="col  max-w-sm	p-6 mx-auto m-10">
-            <form action="/submit" method="post" class="	">
+            <form action="/submit" method="post" class="">
             <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
             <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3">
              </form>
@@ -23,7 +23,7 @@
         <% if(locals.toBuy){ %>
         <ul>
             <% toBuy.forEach(item =>{ %>
-                <li><input type="checkbox" name="" id=""> <%= item %></li>
+                <li><input type="checkbox" name="" id="" onclick="toggleStrike(this)"> <span><%= item %></span></li>
            <% }) %>
         </ul>
         <% } %>
