@@ -19,11 +19,11 @@
              </form>
         </div>
     </section>
-    <section class="container mx mx-auto ">
+    <section class=" mx mx-auto p-6 border-lime-100 list-container">
         <% if(locals.toBuy){ %>
         <ul>
             <% toBuy.forEach(item =>{ %>
-                <li><input type="checkbox" name="" id="" onclick="toggleStrike(this)"> <span><%= item %></span></li>
+                <li ><input type="checkbox"  onclick="toggleStrike(this)"> <span><%= item %></span></li>
            <% }) %>
         </ul>
         <% }   %>

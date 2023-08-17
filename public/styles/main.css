@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
 }
+
 svg {
   position: absolute;
   top: 0;
@@ -17,4 +18,14 @@ svg {
     #0e4166
   );
   z-index: -1;
+}
+
+.list-container {
+  max-width: 320px;
+}
+
+.list-container ul {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
