@@ -1,4 +1,4 @@
-#GROCERY LIST
+# GROCERY LIST
 
 ### Live Link
 
@@ -7,7 +7,7 @@
 ##Project Description
 A web application using NODE, EXPRESS and EJS. The application will allow users to create and view grocery items. Items will not persist between sessions as no database will be used in this version of the application.
 
-###Technologies Used
+### Technologies Used
 
 <ul>
 <li>EJS</li>
@@ -16,7 +16,7 @@ A web application using NODE, EXPRESS and EJS. The application will allow users 
 <li>TailwindCSS</li>
 </ul>
 
-###Features
+### Features
 
 <ul>
     <li>Adding of product</li>
