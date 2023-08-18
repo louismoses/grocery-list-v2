@@ -12,16 +12,16 @@
         <p><%- include('partials/dateToday.ejs') %></p>
     </section>
     <section class="container mx-auto  text-black">
-        <div class="col  max-w-sm	p-6 mx-auto m-10">
+        <div class="col  max-w-sm	p-6 mx-auto m-10 ">
             <form action="/submit" method="post" class="">
             <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
-            <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3">
+            <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3 ml-3">
              </form>
         </div>
     </section>
     <section class=" mx mx-auto p-6 border-lime-100 list-container">
         <% if(locals.toBuy){ %>
-        <ul>
+        <ul class="">
             <% toBuy.forEach(item =>{ %>
                 <li ><input type="checkbox"  onclick="toggleStrike(this)"> <span><%= item %></span></li>
            <% }) %>

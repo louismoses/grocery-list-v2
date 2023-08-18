@@ -22,6 +22,8 @@ svg {
 
 .list-container {
   max-width: 320px;
+  border: solid 1px;
+  border-radius: 10px;
 }
 
 .list-container ul {
