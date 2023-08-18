@@ -1,10 +1,11 @@
 # GROCERY LIST
 
-### Live Link
+### Live Link:
 
-[Live Link: grocery-list.onrender.com ](https://grocery-list-q4m4.onrender.com)
+[grocery-list.onrender.com ](https://grocery-list-q4m4.onrender.com)
 
-##Project Description
+## Project Description
+
 A web application using NODE, EXPRESS and EJS. The application will allow users to create and view grocery items. Items will not persist between sessions as no database will be used in this version of the application.
 
 ### Technologies Used
