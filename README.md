@@ -19,4 +19,4 @@ A web application using NODE, EXPRESS and EJS. The application will allow users 
     <li>Line-through on product that has ticked checkbox</li>
     <li>Alternative List for other User</li>
 </ul>
-![Alt text](public)
+![Alt text](https://github.com/louismoses/grocery-list/blob/main/public/img/grocery-list.jpg)
