@@ -1,47 +1,49 @@
 <%- include('partials/header.ejs') %>
 
 
-<main class="container m-auto font-sans text-center z-10 text-white	">
-    <section class="flex gap-6 p-2.5">
-        <a href="/" method="post">Joan</a>
-        <a href="/user2" method="post">Thelma</a>
-    </section>
-
-    <section class="text-center">
-        <h1 class="text-4xl ">Grocery List</h1>
-        <p><%- include('partials/dateToday.ejs') %></p>
-    </section>
-    <section class="container mx-auto  text-black">
-        <div class="col  max-w-sm	p-6 mx-auto m-10 ">
-            <form action="/submit" method="post" class="">
-            <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
-            <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3 ml-3">
-             </form>
-        </div>
-    </section>
+<main class="main-container">
+    <div class="container m-auto font-sans text-center z-10 text-white	">
+        <section class="flex gap-6 p-2.5">
+            <a href="/" method="post">Joan</a>
+            <a href="/user2" method="post">Thelma</a>
+        </section>
     
-        <% if(locals.toBuy){ %>
-    <section class=" mx mx-auto p-6 border-lime-100 list-container">
-        <ul class="">
-            <% toBuy.forEach(item =>{ %>
-                <li ><input type="checkbox"  onclick="toggleStrike(this)"> <span><%= item %></span></li>
-           <% }) %>
-        </ul>
+        <section class="text-center">
+            <h1 class="text-4xl ">Grocery List</h1>
+            <p><%- include('partials/dateToday.ejs') %></p>
+        </section>
+        <section class="container mx-auto  text-black">
+            <div class="col  max-w-sm	p-6 mx-auto m-10 ">
+                <form action="/submit" method="post" class="">
+                <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3">
+                <input type="submit" value="Add" class="rounded-full bg-lime-400 p-3 ml-3">
+                 </form>
+            </div>
+        </section>
         
-        
-    </section>
-        <% }   %>
-
-        <% if (locals.toBuy && locals.toBuy.length > 0) { %>
-            <section class="mx-auto mt-4">
-                <form action="/clear" method="">
-                    <input type="submit" value="Clear List" class="rounded-full bg-red-400 p-3">
-                </form>
-            </section>
-         <% } %>
-
+            <% if(locals.toBuy){ %>
+        <section class=" mx mx-auto p-6 border-lime-100 list-container">
+            <ul class="">
+                <% toBuy.forEach(item =>{ %>
+                    <li ><input type="checkbox"  onclick="toggleStrike(this)"> <span><%= item %></span></li>
+               <% }) %>
+            </ul>
+            
+            
+        </section>
+            <% }   %>
+    
+            <% if (locals.toBuy && locals.toBuy.length > 0) { %>
+                <section class="mx-auto mt-4">
+                    <form action="/clear" method="">
+                        <input type="submit" value="Clear List" class="rounded-full bg-red-400 p-3">
+                    </form>
+                </section>
+             <% } %>
+    
+    </div>
 </main>
     
 
-<%- include('partials/footer.ejs') %>
+
 <%- include('partials/animatedBackground.ejs') %>

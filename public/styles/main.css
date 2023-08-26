@@ -31,3 +31,19 @@ svg {
   flex-direction: column;
   text-align: left;
 }
+.main-container {
+  background-color: #0e4166;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(14, 65, 102, 0.86),
+    #0e4166
+  );
+  padding-bottom: 32px;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
