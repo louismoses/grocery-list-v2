@@ -3,8 +3,8 @@
 
 <main class="container m-auto font-sans text-center z-10 text-white	">
     <section class="flex gap-6 p-2.5">
-        <a href="/" method="post">User 1</a>
-        <a href="/user2" method="post">User 2</a>
+        <a href="/" method="post">Joan</a>
+        <a href="/user2" method="post">Thelma</a>
     </section>
 
     <section class="text-center">
@@ -19,17 +19,26 @@
              </form>
         </div>
     </section>
-    <section class=" mx mx-auto p-6 border-lime-100 list-container">
+    
         <% if(locals.toBuy){ %>
+    <section class=" mx mx-auto p-6 border-lime-100 list-container">
         <ul class="">
             <% toBuy.forEach(item =>{ %>
                 <li ><input type="checkbox"  onclick="toggleStrike(this)"> <span><%= item %></span></li>
            <% }) %>
         </ul>
-        <% }   %>
+        
+        
     </section>
-    
+        <% }   %>
 
+        <% if (locals.toBuy && locals.toBuy.length > 0) { %>
+            <section class="mx-auto mt-4">
+                <form action="/clear" method="">
+                    <input type="submit" value="Clear List" class="rounded-full bg-red-400 p-3">
+                </form>
+            </section>
+         <% } %>
 
 </main>
     

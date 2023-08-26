@@ -29,6 +29,20 @@ app.post("/submit", (req, res) => {
   }
 });
 
+app.get("/clear", (req, res) => {
+  if (user === "user1") {
+    itemsToBuy = [];
+    user = "user1";
+    res.render("index.ejs", { toBuy: itemsToBuy });
+    res.redirect("/");
+  } else if (user === "user2") {
+    user = "user2";
+    itemsToBuy2 = [];
+    res.render("index.ejs", { toBuy: itemsToBuy2 });
+    res.redirect("/user2");
+  }
+});
+
 app.get("/user2", (req, res) => {
   user = "user2";
   res.render("index.ejs", { toBuy: itemsToBuy2 });
