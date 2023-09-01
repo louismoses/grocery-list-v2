@@ -72,7 +72,6 @@ app.get("/", async (req, res) => {
   try {
     let foundItems = await Item.find({});
     res.render("index.ejs", { toBuy: foundItems });
-    console.log(foundItems);
   } catch (err) {
     console.log("Error viewing the items", err);
     res.status(500).send("Error viewing items");

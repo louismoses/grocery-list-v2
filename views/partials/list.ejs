@@ -1,14 +1,5 @@
 <section class=" mx mx-auto p-6 border-lime-100 list-container">
     <% if(locals.toBuy){ %>
-    <ul class="">
-       
-            <li >
-                 
-            </li>
-      
-    </ul>
-
-
     <table class="table-auto">
         <thead>
           <tr>
@@ -21,10 +12,10 @@
         <tbody>
             <% for(let i =0;i<toBuy.length;i++) { %>
             <tr>
-                <td><input type="checkbox"  onclick="toggleStrike(this)"></td>
-            <td><%= toBuy[i].name %></td>
-            <td><%= toBuy[i].quantity %></td>
-            <td><%= toBuy[i].price %></td>
+                <td><input type="checkbox" onclick="toggleStrike(this)"></td>
+                <td class="todo-item"><%= toBuy[i].name %></td>
+                <td><%= toBuy[i].quantity %></td>
+                <td><%= toBuy[i].price %></td>
             </tr>
             <% } %>
         </tbody>
