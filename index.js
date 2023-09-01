@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let user = "user1";
 
 // connect to DB
+/*
 const startServer = () => {
   mongoose
     .connect(process.env.MONGO_URI)
@@ -23,7 +24,11 @@ const startServer = () => {
     .catch((err) => console.log(err));
 };
 
-startServer();
+startServer(); */
+
+mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
+  useNewUrlParser: true,
+});
 
 const itemSchema = new mongoose.Schema({
   name: String,
@@ -61,12 +66,19 @@ const addItems = async () => {
   }
 };
 
-addItems();
+// addItems();
 
-app.get("/", (req, res) => {
-  user = "user1";
-  res.render("index.ejs", { toBuy: itemsToBuy });
+app.get("/", async (req, res) => {
+  try {
+    let foundItems = await Item.find({});
+    res.render("index.ejs", { toBuy: foundItems });
+    console.log(foundItems);
+  } catch (err) {
+    console.log("Error viewing the items", err);
+    res.status(500).send("Error viewing items");
+  }
 });
+
 app.post("/submit", (req, res) => {
   const newItem = req.body["product"];
 
