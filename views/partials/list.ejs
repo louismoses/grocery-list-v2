@@ -10,14 +10,14 @@
           </tr>
         </thead>
         <tbody>
-            <% for(let i =0;i<toBuy.length;i++) { %>
+            <% toBuy.forEach(function(item) { %>
             <tr>
                 <td><input type="checkbox" onclick="toggleStrike(this)"></td>
-                <td class="todo-item"><%= toBuy[i].name %></td>
-                <td><%= toBuy[i].quantity %></td>
-                <td><%= toBuy[i].price %></td>
+                <td class="todo-item"><%= item.name %></td>
+                <td><%= item.quantity %></td>
+                <td><%= item.price %></td>
             </tr>
-            <% } %>
+            <% }) %>
         </tbody>
     </table>
     <% }   %>
