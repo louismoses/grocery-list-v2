@@ -1,15 +1,67 @@
 import express from "express";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 const app = express();
 const port = 3000;
 
+dotenv.config();
+
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let itemsToBuy = [];
-let itemsToBuy2 = [];
+// let itemsToBuy = [];
+// let itemsToBuy2 = [];
 let user = "user1";
+
+// connect to DB
+const startServer = () => {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("[⚡] connected to database sucessfully"))
+    .catch((err) => console.log(err));
+};
+
+startServer();
+
+const itemSchema = new mongoose.Schema({
+  name: String,
+  quantity: Number,
+  price: Number,
+});
+
+const Item = new mongoose.model("Item", itemSchema);
+
+const item1 = new Item({
+  name: "Bread",
+  quantity: 2,
+  price: 89,
+});
+const item2 = new Item({
+  name: "Milk",
+  quantity: 1,
+  price: 900,
+});
+const item3 = new Item({
+  name: "Chips",
+  quantity: 4,
+  price: 14,
+});
+
+const defaultItems = [item1, item2, item3];
+
+// Define an async function to add items
+const addItems = async () => {
+  try {
+    await Item.insertMany(defaultItems);
+    console.log("Default items added successfully");
+  } catch (error) {
+    console.error("Error adding default items:", error);
+  }
+};
+
+addItems();
 
 app.get("/", (req, res) => {
   user = "user1";
