@@ -52,22 +52,21 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-// Define an async function to add items
-const addItems = async () => {
+//an async function to add item/s
+const addItems = async (items) => {
   try {
-    await Item.insertMany(defaultItems);
+    await Item.insertMany(items);
     console.log("Default items added successfully");
   } catch (error) {
     console.error("Error adding default items:", error);
   }
 };
-// addItems();
 
 app.get("/", async (req, res) => {
   try {
     let foundItems = await Item.find({});
     if (foundItems.length === 0) {
-      addItems();
+      addItems(defaultItems);
       res.redirect("/");
     } else {
       res.render("index.ejs", { toBuy: foundItems });
@@ -80,7 +79,13 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/submit", (req, res) => {
-  const newItem = req.body["product"];
+  const newItem = new Item({
+    name: req.body["product"],
+    quantity: req.body["quantity"],
+    price: req.body["price"],
+  });
+  addItems(newItem);
+  res.redirect("/");
 });
 
 app.get("/clear", (req, res) => {
