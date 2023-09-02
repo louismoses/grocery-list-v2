@@ -71,7 +71,13 @@ const addItems = async () => {
 app.get("/", async (req, res) => {
   try {
     let foundItems = await Item.find({});
-    res.render("index.ejs", { toBuy: foundItems });
+    if (foundItems.length === 0) {
+      addItems();
+      res.redirect("/");
+    } else {
+      res.render("index.ejs", { toBuy: foundItems });
+      console.log("Successfully saved default items to DB");
+    }
   } catch (err) {
     console.log("Error viewing the items", err);
     res.status(500).send("Error viewing items");
