@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
+import mongoose, { model } from "mongoose";
 import dotenv from "dotenv";
 
 const app = express();
@@ -27,7 +27,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
 });
 
 const itemSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   quantity: Number,
   price: Number,
 });
@@ -56,7 +56,16 @@ const defaultItems = [item1, item2, item3];
 const addItems = async (items) => {
   try {
     await Item.insertMany(items);
-    console.log("Default items added successfully");
+    console.log("Item/s added successfully");
+  } catch (error) {
+    console.error("Error adding default items:", error);
+  }
+};
+
+const clearList = async () => {
+  try {
+    await Item.deleteMany();
+    console.log("List Cleared");
   } catch (error) {
     console.error("Error adding default items:", error);
   }
@@ -70,7 +79,6 @@ app.get("/", async (req, res) => {
       res.redirect("/");
     } else {
       res.render("index.ejs", { toBuy: foundItems });
-      console.log("Successfully saved default items to DB");
     }
   } catch (err) {
     console.log("Error viewing the items", err);
@@ -89,17 +97,8 @@ app.post("/submit", (req, res) => {
 });
 
 app.get("/clear", (req, res) => {
-  if (user === "user1") {
-    itemsToBuy = [];
-    user = "user1";
-    res.render("index.ejs", { toBuy: itemsToBuy });
-    res.redirect("/");
-  } else if (user === "user2") {
-    user = "user2";
-    itemsToBuy2 = [];
-    res.render("index.ejs", { toBuy: itemsToBuy2 });
-    res.redirect("/user2");
-  }
+  clearList();
+  res.redirect("/");
 });
 
 app.get("/user2", (req, res) => {
