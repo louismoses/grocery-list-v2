@@ -11,10 +11,6 @@ dotenv.config();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// let itemsToBuy = [];
-// let itemsToBuy2 = [];
-let user = "user1";
-
 // connect to DB
 /*
 const startServer = () => {
@@ -65,7 +61,6 @@ const addItems = async () => {
     console.error("Error adding default items:", error);
   }
 };
-
 // addItems();
 
 app.get("/", async (req, res) => {
@@ -86,16 +81,6 @@ app.get("/", async (req, res) => {
 
 app.post("/submit", (req, res) => {
   const newItem = req.body["product"];
-
-  if (user === "user1") {
-    itemsToBuy.unshift(newItem);
-    user = "user1";
-    res.redirect("/");
-  } else if (user === "user2") {
-    user = "user2";
-    itemsToBuy2.unshift(newItem);
-    res.redirect("/user2");
-  }
 });
 
 app.get("/clear", (req, res) => {

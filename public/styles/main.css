@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
 svg {
   position: absolute;
   top: 0;
@@ -20,17 +25,6 @@ svg {
   z-index: -1;
 }
 
-.list-container {
-  max-width: 320px;
-  border: solid 1px;
-  border-radius: 10px;
-}
-
-.list-container ul {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
 .main-container {
   background-color: #0e4166;
   background-image: linear-gradient(
@@ -43,7 +37,23 @@ svg {
   max-height: 100vh;
 }
 
-body {
-  margin: 0;
-  overflow: hidden;
+/* form elements */
+@media (min-width: 461px) {
+  .quantity-el,
+  .price-el {
+    width: 110px;
+  }
+}
+
+/* list elements */
+.list-container {
+  max-width: 320px;
+  border: solid 1px;
+  border-radius: 10px;
+}
+
+.list-container ul {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
