@@ -97,10 +97,14 @@ app.post("/submit", (req, res) => {
   res.redirect("/");
 });
 
-//  im here
 app.post("/clear", (req, res) => {
   clearList();
   res.redirect("/");
+});
+
+//  im here
+app.post("/status", (req, res) => {
+  const checkedItemId = req.body["checkbox"];
 });
 
 app.get("/user2", (req, res) => {
