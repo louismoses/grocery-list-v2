@@ -61,13 +61,14 @@ const addItems = async (items) => {
     console.error("Error adding default items:", error);
   }
 };
-
+//an async function to clear items
 const clearList = async () => {
   try {
     await Item.deleteMany();
     console.log("List Cleared");
   } catch (error) {
     console.error("Error adding default items:", error);
+    res.status(500).send("Error clearing the list");
   }
 };
 
@@ -96,7 +97,8 @@ app.post("/submit", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/clear", (req, res) => {
+//  im here
+app.post("/clear", (req, res) => {
   clearList();
   res.redirect("/");
 });
