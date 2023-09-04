@@ -28,7 +28,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
 
 const itemSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  quantity: Number,
+  quantity: { type: Number, min: 1 },
   price: Number,
 });
 
@@ -90,8 +90,8 @@ app.get("/", async (req, res) => {
 app.post("/submit", (req, res) => {
   const newItem = new Item({
     name: req.body["product"],
-    quantity: req.body["quantity"],
-    price: req.body["price"],
+    quantity: req.body["quantity"] ? req.body["quantity"] : 1,
+    price: req.body["price"] ? req.body["price"] : 0,
   });
   addItems(newItem);
   res.redirect("/");
