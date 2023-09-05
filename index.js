@@ -27,6 +27,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
 });
 
 const itemSchema = new mongoose.Schema({
+  checkbox: { type: Boolean, default: false },
   name: { type: String, required: true },
   quantity: { type: Number, min: 1 },
   price: Number,
@@ -35,16 +36,19 @@ const itemSchema = new mongoose.Schema({
 const Item = new mongoose.model("Item", itemSchema);
 
 const item1 = new Item({
+  checkbox: false,
   name: "Bread",
   quantity: 2,
   price: 89,
 });
 const item2 = new Item({
+  checkbox: false,
   name: "Milk",
   quantity: 1,
   price: 900,
 });
 const item3 = new Item({
+  checkbox: false,
   name: "Chips",
   quantity: 4,
   price: 14,
@@ -89,6 +93,7 @@ app.get("/", async (req, res) => {
 
 app.post("/submit", (req, res) => {
   const newItem = new Item({
+    checkbox: req.body["checkbox"],
     name: req.body["product"],
     quantity: req.body["quantity"] ? req.body["quantity"] : 1,
     price: req.body["price"] ? req.body["price"] : 0,
@@ -102,9 +107,29 @@ app.post("/clear", (req, res) => {
   res.redirect("/");
 });
 
-//  im here
-app.post("/status", (req, res) => {
-  const checkedItemId = req.body["checkbox"];
+// im here
+app.post("/status", async (req, res) => {
+  try {
+    const checkedItemId = req.body["checkbox"];
+
+    // Use async/await to wait for the update operation to complete
+    const updatedItem = await Item.findOneAndUpdate(
+      { _id: checkedItemId },
+      { $set: { checkbox: true } },
+      { new: true }
+    );
+
+    if (!updatedItem) {
+      console.error("Item not found or not updated.");
+      return res.status(404).send("Item not found or not updated.");
+    }
+
+    console.log("Item updated to true:", updatedItem);
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error updating the checkbox:", error);
+    res.status(500).send("Error updating the checkbox.");
+  }
 });
 
 app.get("/user2", (req, res) => {

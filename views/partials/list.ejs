@@ -13,7 +13,7 @@
             <% toBuy.forEach(function(item) { %>
               <form action="/status" method="post">
             <tr>
-                <td><input type="checkbox" value="<%=item._id%>" onclick="toggleStrike(this)" name="checkbox" onChange="this.form.submit()"></td>
+                <td><input type="checkbox" value="<%=item._id%>" onclick="toggleStrike(this)" name="checkbox" onChange="this.form.submit()" <%= item.checkbox ? 'checked': ""%>></td>
                 <td class="todo-item"><%= item.name %></td>
                 <td><%= item.quantity %></td>
                 <td><%= item.price %></td>
