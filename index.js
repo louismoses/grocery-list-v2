@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose, { model } from "mongoose";
 import dotenv from "dotenv";
+import ejs from "ejs";
 
 const app = express();
 const port = 3000;
@@ -30,7 +31,9 @@ const itemSchema = new mongoose.Schema({
   checkbox: { type: Boolean, default: false },
   name: { type: String, required: true },
   quantity: { type: Number, min: 1 },
-  price: Number,
+  price: {
+    type: Number,
+  },
 });
 
 const Item = new mongoose.model("Item", itemSchema);
@@ -48,7 +51,7 @@ const item2 = new Item({
   price: 900,
 });
 const item3 = new Item({
-  checkbox: false,
+  checkbox: true,
   name: "Chips",
   quantity: 4,
   price: 14,
@@ -107,25 +110,27 @@ app.post("/clear", (req, res) => {
   res.redirect("/");
 });
 
-// im here
+//  ================= im here
 app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
 
-    // Use async/await to wait for the update operation to complete
-    const updatedItem = await Item.findOneAndUpdate(
-      { _id: checkedItemId },
-      { $set: { checkbox: true } },
-      { new: true }
-    );
+    // Retrieve the current item from the database
+    const currentItem = await Item.findById(checkedItemId);
 
-    if (!updatedItem) {
-      console.error("Item not found or not updated.");
-      return res.status(404).send("Item not found or not updated.");
+    if (!currentItem) {
+      console.error("Item not found.");
+      return res.status(404).send("Item not found.");
     }
 
-    console.log("Item updated to true:", updatedItem);
+    // Toggle the checkbox value
+    currentItem.checkbox = !currentItem.checkbox;
+
+    // Save the updated item
+    const updatedItem = await currentItem.save();
+
     res.redirect("/");
+    console.log("Item updated:", updatedItem);
   } catch (error) {
     console.error("Error updating the checkbox:", error);
     res.status(500).send("Error updating the checkbox.");
