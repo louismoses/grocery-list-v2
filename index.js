@@ -27,7 +27,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
   useNewUrlParser: true,
 });
 
-const itemSchema = new mongoose.Schema({
+// for grocery list
+const itemsSchema = new mongoose.Schema({
   checkbox: { type: Boolean, default: false },
   name: { type: String, required: true },
   quantity: { type: Number, min: 1 },
@@ -36,7 +37,7 @@ const itemSchema = new mongoose.Schema({
   },
 });
 
-const Item = new mongoose.model("Item", itemSchema);
+const Item = new mongoose.model("Item", itemsSchema);
 
 const item1 = new Item({
   checkbox: false,
@@ -56,7 +57,6 @@ const item3 = new Item({
   quantity: 4,
   price: 14,
 });
-
 const defaultItems = [item1, item2, item3];
 
 //an async function to add item/s
@@ -110,7 +110,6 @@ app.post("/clear", (req, res) => {
   res.redirect("/");
 });
 
-//  ================= im here
 app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
@@ -137,9 +136,28 @@ app.post("/status", async (req, res) => {
   }
 });
 
-app.get("/user2", (req, res) => {
-  user = "user2";
-  res.render("index.ejs", { toBuy: itemsToBuy2 });
+//  ================= im here
+// for user list
+const userSchema = new mongoose.Schema({
+  name: String,
+  items: [itemsSchema],
+});
+
+const User = mongoose.model("User", userSchema);
+
+app.get("/:user", async (req, res) => {
+  const user = req.params.user;
+  // const userList = new User({
+  //   name: user,
+  //   items: defaultItems,
+  // });
+  // userList.save();
+  const currentUser = await User.findOne({ name: user });
+  if (currentUser.name) {
+    console.log(`${currentUser.name} exist`);
+  } else if (err) {
+    console.log(err);
+  }
 });
 
 app.listen(port, () => {
