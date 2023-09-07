@@ -147,17 +147,17 @@ const User = mongoose.model("User", userSchema);
 
 app.get("/:user", async (req, res) => {
   const user = req.params.user;
-  // const userList = new User({
-  //   name: user,
-  //   items: defaultItems,
-  // });
-  // userList.save();
   const currentUser = await User.findOne({ name: user });
-  if (currentUser.name) {
-    console.log(`${currentUser.name} exist`);
-  } else if (err) {
-    console.log(err);
+  if (!currentUser) {
+    const userList = new User({
+      name: user,
+      items: defaultItems,
+    });
+    userList.save();
+    res.redirect("/" + user);
   }
+  res.render("index.ejs", { toBuy: currentUser.items });
+  console.log(`${currentUser.name} exist`);
 });
 
 app.listen(port, () => {
