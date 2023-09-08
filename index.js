@@ -98,16 +98,23 @@ app.get("/", async (req, res) => {
 // add new item route
 app.post("/submit", async (req, res) => {
   const userName = req.body["currentUser"];
+  const addUserItem = await User.findOne({ name: userName });
+
   const newItem = new Item({
     checkbox: req.body["checkbox"],
     name: req.body["product"],
     quantity: req.body["quantity"] ? req.body["quantity"] : 1,
     price: req.body["price"] ? req.body["price"] : 0,
   });
-  const addUserItem = await User.findOne({ name: userName });
-  addUserItem.items.push(newItem);
-  addUserItem.save();
-  res.redirect("/" + userName);
+
+  if (!userName) {
+    addItems(newItem);
+    res.redirect("/");
+  } else {
+    addUserItem.items.push(newItem);
+    addUserItem.save();
+    res.redirect("/" + userName);
+  }
 });
 
 // clear items route
@@ -161,12 +168,17 @@ app.get("/:user", async (req, res) => {
       items: defaultItems,
     });
     userList.save();
+    res.render("index.ejs", {
+      toBuy: userList.items,
+      userName: userList.name,
+    });
     res.redirect("/" + user);
+  } else {
+    res.render("index.ejs", {
+      toBuy: currentUser.items,
+      userName: currentUser.name,
+    });
   }
-  res.render("index.ejs", {
-    toBuy: currentUser.items,
-    userName: currentUser.name,
-  });
 });
 
 app.listen(port, () => {
