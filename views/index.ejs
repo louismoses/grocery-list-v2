@@ -10,7 +10,7 @@
         </section>
     
         <section class="text-center">
-            <h1 class="text-4xl "> Grocery List</h1>
+            <h1 class="text-4xl "> <span class="capitalize"><%= locals.userName %>'s</span> Grocery List</h1>
             <p><%- include('partials/dateToday.ejs') %></p>
         </section>
         
@@ -20,7 +20,7 @@
                 <input type="text" name="product" placeholder="Product Name" class="bg-lime-100 p-3 product-el">
                 <input type="number" min="1" name="quantity" placeholder="Quantity" class="bg-lime-100 p-3 quantity-el">
                 <input type="number" min="0" name="price" placeholder="Price" class="bg-lime-100 p-3 price-el">
-                <input type="submit" value="Add" class="rounded-full bg-lime-400 px-10 py-2.5">
+                <button type="submit" name="currentUser" value="<%= locals.userName %>" class="rounded-full bg-lime-400 px-10 py-2.5">Add</button>
                  </form>
             </div>
         </section>

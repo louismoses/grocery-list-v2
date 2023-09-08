@@ -79,6 +79,7 @@ const clearList = async () => {
   }
 };
 
+// default route
 app.get("/", async (req, res) => {
   try {
     let foundItems = await Item.find({});
@@ -94,22 +95,28 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.post("/submit", (req, res) => {
+// add new item route
+app.post("/submit", async (req, res) => {
+  const userName = req.body["currentUser"];
   const newItem = new Item({
     checkbox: req.body["checkbox"],
     name: req.body["product"],
     quantity: req.body["quantity"] ? req.body["quantity"] : 1,
     price: req.body["price"] ? req.body["price"] : 0,
   });
-  addItems(newItem);
-  res.redirect("/");
+  const addUserItem = await User.findOne({ name: userName });
+  addUserItem.items.push(newItem);
+  addUserItem.save();
+  res.redirect("/" + userName);
 });
 
+// clear items route
 app.post("/clear", (req, res) => {
   clearList();
   res.redirect("/");
 });
 
+// checkbox status route
 app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
@@ -136,7 +143,6 @@ app.post("/status", async (req, res) => {
   }
 });
 
-//  ================= im here
 // for user list
 const userSchema = new mongoose.Schema({
   name: String,
@@ -145,6 +151,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// add new item on user list route
 app.get("/:user", async (req, res) => {
   const user = req.params.user;
   const currentUser = await User.findOne({ name: user });
@@ -156,8 +163,10 @@ app.get("/:user", async (req, res) => {
     userList.save();
     res.redirect("/" + user);
   }
-  res.render("index.ejs", { toBuy: currentUser.items });
-  console.log(`${currentUser.name} exist`);
+  res.render("index.ejs", {
+    toBuy: currentUser.items,
+    userName: currentUser.name,
+  });
 });
 
 app.listen(port, () => {
