@@ -165,6 +165,7 @@ app.post("/status", async (req, res) => {
     } else {
       // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
       console.log(checkedItemId, user, currentUser, currentItem);
+      // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
     }
     res.redirect("/" + user);
   } catch (error) {
