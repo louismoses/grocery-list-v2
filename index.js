@@ -145,23 +145,28 @@ app.post("/clear", async (req, res) => {
 app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
-
-    // Retrieve the current item from the database
+    const user = req.body.user;
+    const currentUser = await User.findOne({ name: user });
     const currentItem = await Item.findById(checkedItemId);
 
-    if (!currentItem) {
-      console.error("Item not found.");
-      return res.status(404).send("Item not found.");
+    if (!user) {
+      if (!currentItem) {
+        console.error("Item not found.");
+        return res.status(404).send("Item not found.");
+      }
+      // Toggle the checkbox value
+      currentItem.checkbox = !currentItem.checkbox;
+
+      // Save the updated item
+      const updatedItem = await currentItem.save();
+      await currentUser.save();
+
+      res.redirect("/");
+    } else {
+      // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
+      console.log(checkedItemId, user, currentUser, currentItem);
     }
-
-    // Toggle the checkbox value
-    currentItem.checkbox = !currentItem.checkbox;
-
-    // Save the updated item
-    const updatedItem = await currentItem.save();
-
-    res.redirect("/");
-    console.log("Item updated:", updatedItem);
+    res.redirect("/" + user);
   } catch (error) {
     console.error("Error updating the checkbox:", error);
     res.status(500).send("Error updating the checkbox.");
