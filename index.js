@@ -27,7 +27,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
   useNewUrlParser: true,
 });
 
-// for grocery list
+// SCHEMA
+// ->for grocery list
 const itemsSchema = new mongoose.Schema({
   checkbox: { type: Boolean, default: false },
   name: { type: String, required: true },
@@ -37,7 +38,15 @@ const itemsSchema = new mongoose.Schema({
   },
 });
 
+// ->for user list
+const userSchema = new mongoose.Schema({
+  name: String,
+  items: [itemsSchema],
+});
+
+// MODEL
 const Item = new mongoose.model("Item", itemsSchema);
+const User = mongoose.model("User", userSchema);
 
 const item1 = new Item({
   checkbox: false,
@@ -79,7 +88,8 @@ const clearList = async () => {
   }
 };
 
-// default route
+// ROUTE
+// default
 app.get("/", async (req, res) => {
   try {
     let foundItems = await Item.find({});
@@ -95,7 +105,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// add new item route
+// add new item
 app.post("/submit", async (req, res) => {
   const userName = req.body["currentUser"];
   const addUserItem = await User.findOne({ name: userName });
@@ -117,13 +127,21 @@ app.post("/submit", async (req, res) => {
   }
 });
 
-// clear items route
-app.post("/clear", (req, res) => {
-  clearList();
-  res.redirect("/");
+// clear items
+app.post("/clear", async (req, res) => {
+  const user = req.body.user;
+  const clearUserItems = await User.findOne({ name: user });
+  if (!user) {
+    clearList();
+    res.redirect("/");
+  } else {
+    clearUserItems.items = defaultItems;
+    await clearUserItems.save();
+    res.redirect("/" + user);
+  }
 });
 
-// checkbox status route
+// checkbox status
 app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
@@ -150,14 +168,6 @@ app.post("/status", async (req, res) => {
   }
 });
 
-// for user list
-const userSchema = new mongoose.Schema({
-  name: String,
-  items: [itemsSchema],
-});
-
-const User = mongoose.model("User", userSchema);
-
 // add new item on user list route
 app.get("/:user", async (req, res) => {
   const user = req.params.user;
@@ -181,6 +191,7 @@ app.get("/:user", async (req, res) => {
   }
 });
 
+// RUNNING SERVER
 app.listen(port, () => {
   console.log(`App server running on port ${port}`);
 });

@@ -23,6 +23,7 @@
                   <%= item.checkbox ? "checked" :  " " %>  
                   >
                   <input type="hidden" name="checkbox" value="<%= item._id %>">
+                  <input type="hidden" name="user" value="<%= locals.userName %>">
                 </td>
                 <td class="todo-item, <%= item.checkbox ? 'line-through' : '' %>" ><%= item.name %></td>
                 <td><%= item.quantity %></td>
