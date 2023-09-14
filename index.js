@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose, { model } from "mongoose";
 import dotenv from "dotenv";
-import ejs from "ejs";
+import _ from "lodash";
 
 const app = express();
 const port = 3000;
@@ -107,7 +107,7 @@ app.get("/", async (req, res) => {
 
 // add new item
 app.post("/submit", async (req, res) => {
-  const userName = req.body["currentUser"];
+  const userName = req.body.currentUser;
   const addUserItem = await User.findOne({ name: userName });
 
   const newItem = new Item({
@@ -116,13 +116,13 @@ app.post("/submit", async (req, res) => {
     quantity: req.body["quantity"] ? req.body["quantity"] : 1,
     price: req.body["price"] ? req.body["price"] : 0,
   });
-
+  console.log(userName);
   if (!userName) {
     addItems(newItem);
     res.redirect("/");
   } else {
     addUserItem.items.push(newItem);
-    addUserItem.save();
+    await addUserItem.save();
     res.redirect("/" + userName);
   }
 });
@@ -149,25 +149,24 @@ app.post("/status", async (req, res) => {
     const currentUser = await User.findOne({ name: user });
     const currentItem = await Item.findById(checkedItemId);
 
-    if (!user) {
-      if (!currentItem) {
-        console.error("Item not found.");
-        return res.status(404).send("Item not found.");
-      }
-      // Toggle the checkbox value
-      currentItem.checkbox = !currentItem.checkbox;
-
-      // Save the updated item
-      const updatedItem = await currentItem.save();
-      await currentUser.save();
-
-      res.redirect("/");
-    } else {
-      // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
-      console.log(checkedItemId, user, currentUser, currentItem);
-      // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
+    // if (!user) {
+    if (!currentItem) {
+      console.error("Item not found.");
+      return res.status(404).send("Item not found.");
     }
-    res.redirect("/" + user);
+    // Toggle the checkbox value
+    currentItem.checkbox = !currentItem.checkbox;
+
+    // Save the updated item
+    const updatedItem = await currentItem.save();
+
+    res.redirect("/");
+    // } else {
+    //   // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
+    //   console.log(checkedItemId, user, currentUser, currentItem);
+    //   // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
+    // }
+    // res.redirect("/" + user);
   } catch (error) {
     console.error("Error updating the checkbox:", error);
     res.status(500).send("Error updating the checkbox.");
@@ -176,18 +175,15 @@ app.post("/status", async (req, res) => {
 
 // add new item on user list route
 app.get("/:user", async (req, res) => {
-  const user = req.params.user;
+  const user = _.capitalize(req.params.user);
   const currentUser = await User.findOne({ name: user });
+
   if (!currentUser) {
     const userList = new User({
       name: user,
       items: defaultItems,
     });
-    userList.save();
-    res.render("index.ejs", {
-      toBuy: userList.items,
-      userName: userList.name,
-    });
+    await userList.save();
     res.redirect("/" + user);
   } else {
     res.render("index.ejs", {
