@@ -116,7 +116,6 @@ app.post("/submit", async (req, res) => {
     quantity: req.body["quantity"] ? req.body["quantity"] : 1,
     price: req.body["price"] ? req.body["price"] : 0,
   });
-  console.log(userName);
   if (!userName) {
     addItems(newItem);
     res.redirect("/");
@@ -146,27 +145,37 @@ app.post("/status", async (req, res) => {
   try {
     const checkedItemId = req.body["checkbox"];
     const user = req.body.user;
-    const currentUser = await User.findOne({ name: user });
     const currentItem = await Item.findById(checkedItemId);
 
-    // if (!user) {
-    if (!currentItem) {
-      console.error("Item not found.");
-      return res.status(404).send("Item not found.");
+    if (!user) {
+      if (!currentItem) {
+        console.error("Item not found.");
+        return res.status(404).send("Item not found..");
+      }
+
+      // Toggle the checkbox value
+      currentItem.checkbox = !currentItem.checkbox;
+
+      // Save the updated item
+      const updatedItem = await currentItem.save();
+      res.redirect("/");
+      console.log("Item updated:", updatedItem);
+    } else {
+      //
+      await User.updateMany(
+        { "items._id": checkedItemId },
+        {
+          $set: {
+            "items.$.checkbox": true,
+          },
+        },
+        {
+          arrayFilters: [{ "element._id": checkedItemId }],
+        }
+      );
+      res.redirect("/" + user);
+      //
     }
-    // Toggle the checkbox value
-    currentItem.checkbox = !currentItem.checkbox;
-
-    // Save the updated item
-    const updatedItem = await currentItem.save();
-
-    res.redirect("/");
-    // } else {
-    //   // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
-    //   console.log(checkedItemId, user, currentUser, currentItem);
-    //   // IM HERE \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
-    // }
-    // res.redirect("/" + user);
   } catch (error) {
     console.error("Error updating the checkbox:", error);
     res.status(500).send("Error updating the checkbox.");
