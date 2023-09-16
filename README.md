@@ -6,15 +6,17 @@
 
 ## Project Description
 
-A web application using NODE, EXPRESS and EJS. The application will allow users to create and view grocery items. Items will not persist between sessions as no database will be used in this version of the application.
+A web application using MONGO, EXPRESS, EJS and NODE. The application will allow users to add new items, strike items that is already in the cart and clear the List. User can also create a new different list for different events or occasion.
 
 ### Technologies Used
 
 <ul>
-<li>EJS</li>
+<li>MongoDB</li>
 <li>Express.js</li>
+<li>EJS</li>
 <li>Node.js</li>
 <li>TailwindCSS</li>
+
 </ul>
 
 ### Features
