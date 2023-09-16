@@ -44,6 +44,12 @@ svg {
     width: 110px;
   }
 }
+@media (max-width: 460px) {
+  .input-form {
+    max-width: 326px;
+    margin: 0 auto;
+  }
+}
 
 /* list elements */
 .list-container {

@@ -13,7 +13,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // connect to DB
-/*
+
 const startServer = () => {
   mongoose
     .connect(process.env.MONGO_URI)
@@ -21,11 +21,11 @@ const startServer = () => {
     .catch((err) => console.log(err));
 };
 
-startServer(); */
+startServer();
 
-mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
-  useNewUrlParser: true,
-});
+// mongoose.connect("mongodb://127.0.0.1:27017/groceryList", {
+//   useNewUrlParser: true,
+// });
 
 // SCHEMA
 // ->for grocery list

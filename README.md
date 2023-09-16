@@ -28,4 +28,6 @@ A web application using NODE, EXPRESS and EJS. The application will allow users 
 
 ### Sample Screenshots
 
-![grocery-list](https://github.com/louismoses/grocery-list/assets/51215698/0400af7d-8925-490c-aa8b-5f5d5ae54ccb)
+![image](https://github.com/louismoses/grocery-list-v2/assets/51215698/d13ee788-7408-43e7-8ced-7d206f7d332d)
+
+![image](https://github.com/louismoses/grocery-list-v2/assets/51215698/8a6e4642-c4c1-4cd3-a0de-8a89bed12000)
