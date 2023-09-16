@@ -146,6 +146,7 @@ app.post("/status", async (req, res) => {
     const checkedItemId = req.body["checkbox"];
     const user = req.body.user;
     const currentItem = await Item.findById(checkedItemId);
+    const checkBoxStatus = req.body.checkBoxStatus;
 
     if (!user) {
       if (!currentItem) {
@@ -161,20 +162,28 @@ app.post("/status", async (req, res) => {
       res.redirect("/");
       console.log("Item updated:", updatedItem);
     } else {
-      //
-      await User.updateMany(
-        { "items._id": checkedItemId },
-        {
-          $set: {
-            "items.$.checkbox": true,
-          },
-        },
-        {
-          arrayFilters: [{ "element._id": checkedItemId }],
-        }
-      );
-      res.redirect("/" + user);
-      //
+      if (checkBoxStatus === "true") {
+        await User.updateMany(
+          { "items._id": checkedItemId },
+          {
+            $set: {
+              "items.$.checkbox": false,
+            },
+          }
+        );
+        res.redirect("/" + user);
+      }
+      if (checkBoxStatus === "false") {
+        await User.updateMany(
+          { "items._id": checkedItemId },
+          {
+            $set: {
+              "items.$.checkbox": true,
+            },
+          }
+        );
+        res.redirect("/" + user);
+      }
     }
   } catch (error) {
     console.error("Error updating the checkbox:", error);
